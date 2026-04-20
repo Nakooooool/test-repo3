@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Glimpse-web — Your daily news at a glance. Top stories across Tech, Sports, Business, Health and Entertainment."/>
+  <title>Glimpse-web | News at a Glance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glimpse — Your World, Curated</title>
+
+  <!-- Google Fonts: Playfair Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <!-- ════════════════════════════════════════════════
+       STICKY NAVBAR
+  ════════════════════════════════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+
+  <!-- ── Navbar ── -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">
+        <span class="logo-mark">◈</span>
+        <span class="logo-word">Glimpse</span><span class="logo-dash">-web</span>
+      </div>
+      <div class="nav-right">
+        <!-- Animated search -->
+        <div class="search-wrap">
+          <button class="search-toggle" id="searchToggle" aria-label="Open search">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+          <input class="search-input" id="searchInput" type="text" placeholder="Search stories…" autocomplete="off" aria-label="Search news"/>
+      <!-- Logo -->
+      <a href="/" class="navbar__logo" aria-label="Glimpse home">
+        <span class="navbar__logo-mark">◆</span>
+        <span class="navbar__logo-text">Glimpse</span>
+      </a>
+
+      <!-- Animated Search Bar -->
+      <div class="search-wrap" role="search">
+        <button class="search-icon-btn" id="searchToggle" aria-label="Toggle search" aria-expanded="false">
+          <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <div class="search-bar" id="searchBar" role="combobox" aria-expanded="false">
+          <input
+            type="search"
+            id="searchInput"
+            class="search-bar__input"
+            placeholder="Search stories…"
+            autocomplete="off"
+            aria-label="Search news articles"
+          />
+          <button class="search-bar__clear" id="searchClear" aria-label="Clear search">✕</button>
+        </div>
+        <!-- Dark / light toggle -->
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+          <span id="themeIcon">☀</span>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="navbar__controls">
+        <!-- Bookmarks trigger -->
+        <button class="nav-btn" id="bookmarksBtn" aria-label="View bookmarks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="nav-btn__badge" id="bookmarkCount">0</span>
+        </button>
+
+        <!-- Theme toggle -->
+        <button class="nav-btn theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+          <span class="theme-toggle__icon" id="themeIcon">☀️</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Category tabs ── -->
+  <nav class="tabs-bar" aria-label="News categories">
+    <div class="tabs-inner" id="tabs">
+      <button class="tab active" data-cat="general">Top</button>
+      <button class="tab" data-cat="tech">Tech</button>
+      <button class="tab" data-cat="sports">Sports</button>
+      <button class="tab" data-cat="business">Business</button>
+      <button class="tab" data-cat="health">Health</button>
+      <button class="tab" data-cat="entertainment">Entertainment</button>
+      <button class="tab" data-cat="saved">Saved</button>
+      <!-- Sliding underline -->
+      <span class="tab-ink" id="tabInk"></span>
+  <!-- ════════════════════════════════════════════════
+       HERO STRIP
+  ════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Page introduction">
+    <p class="hero__eyebrow">Your World, Curated</p>
+    <h1 class="hero__headline">Stay Informed,<br/><em>Stay Ahead</em></h1>
+    <p class="hero__sub" id="heroDate"></p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CATEGORY TABS
+  ════════════════════════════════════════════════ -->
+  <nav class="category-nav" aria-label="News categories">
+    <div class="category-nav__inner">
+      <div class="category-tabs" id="categoryTabs" role="tablist">
+        <button class="tab active" role="tab" data-category="general"       aria-selected="true">🌐 General</button>
+        <button class="tab"        role="tab" data-category="business"      aria-selected="false">💼 Business</button>
+        <button class="tab"        role="tab" data-category="technology"    aria-selected="false">💻 Technology</button>
+        <button class="tab"        role="tab" data-category="science"       aria-selected="false">🔬 Science</button>
+        <button class="tab"        role="tab" data-category="health"        aria-selected="false">❤️ Health</button>
+        <button class="tab"        role="tab" data-category="sports"        aria-selected="false">⚽ Sports</button>
+        <button class="tab"        role="tab" data-category="entertainment" aria-selected="false">🎬 Entertainment</button>
+        <button class="tab"        role="tab" data-category="bookmarks"     aria-selected="false">🔖 Saved</button>
+      </div>
+      <!-- Sliding underline indicator -->
+      <span class="tab-indicator" id="tabIndicator" aria-hidden="true"></span>
+    </div>
+  </nav>
+
+  <!-- ── Cards grid ── -->
+  <main class="main" id="main">
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <span class="empty-icon">◈</span>
+      <p>No stories found</p>
+  <!-- ════════════════════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════════════════════ -->
+  <main class="main-content" id="mainContent" role="main">
+
+    <!-- Mock-mode notice -->
+    <div class="notice" id="mockNotice" hidden>
+      <span>🔑</span>
+      <span>Running in demo mode — add your <strong>NewsAPI_KEY</strong> to <code>.env</code> for live headlines.</span>
+    </div>
+
+    <!-- Search results header -->
+    <div class="search-header" id="searchHeader" hidden>
+      <h2 class="search-header__title">Results for: <em id="searchTerm"></em></h2>
+      <button class="search-header__clear" id="clearSearch">← Back to news</button>
+    </div>
+  </main>
+
+  <!-- ── Scroll-to-top ── -->
+  <button class="go-top" id="goTop" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+    <!-- News grid -->
+    <section class="news-grid" id="newsGrid" aria-label="News articles" aria-live="polite"></section>
+
+  <!-- ── Toast ── -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-state__icon">🔍</div>
+      <h3>No articles found</h3>
+      <p>Try a different search term or category.</p>
+    </div>
+
+  </main>
+
+  <!-- ── Modal ── -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Article detail">
+    <div class="modal" id="modal">
+      <button class="modal-x" id="modalX" aria-label="Close">✕</button>
+      <div class="modal-hero">
+        <img class="modal-img" id="modalImg" src="" alt=""/>
+  <!-- ════════════════════════════════════════════════
+       ARTICLE MODAL
+  ════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Article details" hidden>
+    <article class="modal" id="modal">
+      <button class="modal__close" id="modalClose" aria-label="Close article">✕</button>
+
+      <div class="modal__image-wrap">
+        <img class="modal__image" id="modalImage" src="" alt="" loading="lazy" />
+        <span class="modal__source-badge" id="modalSource"></span>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span class="modal-src"  id="modalSrc"></span>
+          <span class="modal-sep">·</span>
+          <span class="modal-date" id="modalDate"></span>
+
+      <div class="modal__body">
+        <div class="modal__meta">
+          <span class="modal__date" id="modalDate"></span>
+          <span class="modal__author" id="modalAuthor"></span>
+        </div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p  class="modal-desc"  id="modalDesc"></p>
+        <div class="modal-foot">
+          <a  class="btn-read"   id="modalLink" href="#" target="_blank" rel="noopener noreferrer">Read full story →</a>
+          <button class="btn-save" id="modalSave">♡ Save</button>
+        <h2 class="modal__title" id="modalTitle"></h2>
+        <p class="modal__description" id="modalDescription"></p>
+        <p class="modal__content" id="modalContent"></p>
+
+        <div class="modal__actions">
+          <a class="btn btn--primary" id="modalReadMore" href="#" target="_blank" rel="noopener noreferrer">
+            Read Full Article →
+          </a>
+          <button class="btn btn--ghost" id="modalBookmark">
+            <span id="modalBookmarkIcon">♡</span> Save
+          </button>
+        </div>
+      </div>
+    </div>
+    </article>
+  </div>
+
+  <script src="/static/script.js"></script>
+  <!-- ════════════════════════════════════════════════
+       TOAST CONTAINER
+  ════════════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
