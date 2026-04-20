@@ -55,7 +55,7 @@ def _extract_ie_image(item):
         return enc.get("url", "")
     # 3. First <img src="..."> inside description HTML
     desc = item.findtext("description") or ""
-    m = _re.search(r'<img[^>]+src=["']([^"']+)["']', desc))
+    m = _re.search(r'<img[^>]+src=["']([^"']+)["']', desc])
     if m:
         return m.group(1)
     return ""
